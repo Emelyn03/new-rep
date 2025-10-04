@@ -1,0 +1,20 @@
+# 1️⃣ Usar Ubuntu como imagen base
+FROM ubuntu:latest
+
+# 2️⃣ Actualizar el sistema e instalar Nginx y Git
+RUN apt-get update && \
+    apt-get install -y nginx git && \
+    rm -rf /var/lib/apt/lists/*
+
+# 3️⃣ Eliminar los archivos por defecto de Nginx
+RUN rm -rf /var/www/html/*
+
+# 4️⃣ Clonar la aplicación 2048 en el directorio del servidor web
+RUN git clone https://github.com/josejuansanchez/2048 /var/www/html/
+
+# 5️⃣ Exponer el puerto 80 para el servicio web
+EXPOSE 80
+
+# 6️⃣ Comando que ejecutará Nginx en primer plano
+CMD ["nginx", "-g", "daemon off;"]
+
